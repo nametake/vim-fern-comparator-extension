@@ -1,0 +1,1 @@
+# fern-comparator-extension.vim
