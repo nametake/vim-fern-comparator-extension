@@ -5,7 +5,7 @@ function! fern#comparator#extension#new() abort
 endfunction
 
 let g:fern_comparator_extension#disable_compare_extension = get(g:, 'fern_comparator_extension#disable_compare_extension', 0)
-let g:fern_comparator_extension#disable_go_test_grouping = get(g:, 'fern_comparator_extension#disable_go_test_grouping', 1)
+let g:fern_comparator_extension#enable_go_test_grouping = get(g:, 'fern_comparator_extension#enable_go_test_grouping', 0)
 
 function s:strcmp(str1, str2)
   if a:str1 < a:str2
@@ -44,7 +44,7 @@ function! s:compare(n1, n2) abort
         endif
       endif
 
-      if g:fern_comparator_extension#disable_go_test_grouping is# 0
+      if g:fern_comparator_extension#enable_go_test_grouping is# 1
         let _g1 = substitute(_k1, '.go$', '', '')
         let _g2 = substitute(_k2, '.go$', '', '')
         let _gt1 = substitute(_g1, '_test$', '', '')
