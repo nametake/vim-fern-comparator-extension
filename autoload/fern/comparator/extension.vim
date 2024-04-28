@@ -31,10 +31,12 @@ function! s:compare(n1, n2) abort
     let _t1 = index + 1 is# l1 ? t1 : 1
     let _t2 = index + 1 is# l2 ? t2 : 1
     if _t1 is# _t2
+      let _k1 = k1[index]
+      let _k2 = k2[index]
       " Extension compare
       if g:fern_comparator_extension#disable_compare_extension is# 0
-        let ext1 = tolower(fnamemodify(k1[index], ':e'))
-        let ext2 = tolower(fnamemodify(k2[index], ':e'))
+        let ext1 = tolower(fnamemodify(_k1, ':e'))
+        let ext2 = tolower(fnamemodify(_k2, ':e'))
         let comparison = s:strcmp(ext1, ext2)
         if comparison isnot# 0
           return comparison
@@ -42,7 +44,7 @@ function! s:compare(n1, n2) abort
       endif
 
       " Lexical compare
-      return k1[index] > k2[index] ? 1 : -1
+      return _k1 > _k2 ? 1 : -1
     else
       " Directory first
       return _t1 ? -1 : 1
