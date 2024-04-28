@@ -5,6 +5,7 @@ function! fern#comparator#extension#new() abort
 endfunction
 
 let g:fern_comparator_extension#disable_compare_extension = get(g:, 'fern_comparator_extension#disable_compare_extension', 0)
+let g:fern_comparator_extension#disable_go_test_grouping = get(g:, 'fern_comparator_extension#disable_go_test_grouping', 1)
 
 function s:strcmp(str1, str2)
   if a:str1 < a:str2
@@ -41,6 +42,17 @@ function! s:compare(n1, n2) abort
         if comparison isnot# 0
           return comparison
         endif
+      endif
+
+      if g:fern_comparator_extension#disable_go_test_grouping is# 0
+        let _g1 = substitute(_k1, '.go$', '', '')
+        let _g2 = substitute(_k2, '.go$', '', '')
+        let _gt1 = substitute(_g1, '_test$', '', '')
+        let _gt2 = substitute(_g2, '_test$', '', '')
+        if _gt1 is# _gt2
+          return _k1 > _k2 ? 1 : -1
+        endif
+        return _gt1 > _gt2 ? 1 : -1
       endif
 
       " Lexical compare
