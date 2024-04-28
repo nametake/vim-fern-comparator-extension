@@ -4,6 +4,8 @@ function! fern#comparator#extension#new() abort
         \ }
 endfunction
 
+let g:fern_comparator_extension#disable_compare_extension = get(g:, 'fern_comparator_extension#disable_compare_extension', 0)
+
 function s:strcmp(str1, str2)
   if a:str1 < a:str2
     return -1
@@ -30,11 +32,13 @@ function! s:compare(n1, n2) abort
     let _t2 = index + 1 is# l2 ? t2 : 1
     if _t1 is# _t2
       " Extension compare
-      let ext1 = tolower(fnamemodify(k1[index], ':e'))
-      let ext2 = tolower(fnamemodify(k2[index], ':e'))
-      let comparison = s:strcmp(ext1, ext2)
-      if comparison isnot# 0
-        return comparison
+      if g:fern_comparator_extension#disable_compare_extension is# 0
+        let ext1 = tolower(fnamemodify(k1[index], ':e'))
+        let ext2 = tolower(fnamemodify(k2[index], ':e'))
+        let comparison = s:strcmp(ext1, ext2)
+        if comparison isnot# 0
+          return comparison
+        endif
       endif
 
       " Lexical compare
