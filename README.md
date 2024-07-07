@@ -1,1 +1,1 @@
-# fern-comparator-extension.vim
+# vim-fern-comparator-extension
